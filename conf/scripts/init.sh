@@ -2,6 +2,7 @@
 echo "=======>>source to vars<<======"
 source ./vars.example
 echo "==========>>生成-pki<<=========="
+rm -rf /etc/openvpn/easyrsa3/pki
 /etc/openvpn/easyrsa3/easyrsa init-pki
 echo "==========>>生成证书文件<<=========="
 expect build-ca.sh

@@ -30,16 +30,15 @@ cd $workdir/soft
 drm easyrsa3
 log "easyrsa3 下载中..."
 svn checkout https://github.com/dounine/easy-rsa/trunk/easyrsa3
-log "easyrsa3 移动==>>"$opdir
-mv -f $workdir/soft/easyrsa3 $opdir
+log "easyrsa3 复制==>>"$opdir
+cp -rf $workdir/soft/easyrsa3 $opdir
 log "openvpn2.3.12 安装编译"
 cd $workdir/soft && tar -zxf openvpn-2.3.12.tar.gz
-cd $workdir/soft/openvpn-2.3.12 && ./configure --prefix=$opdir && make && make install
+cd $workdir/soft/openvpn-2.3.12 && ./configure --prefix=/etc/openvpn && make && make install
 log "编译安装完成"
 log "复制证书生成脚本"
-cp -rf $opdir/conf/scripts/* $opdir/easyrsa3
+cp -rf $workdir/conf/scripts/* $opdir/easyrsa3
 log "生成ca证书"
-#cp -rf $workdir/conf $opdir
 log "openvpn 证书相关操作"
 cd $opdir/easyrsa3 && ./init.sh
 
