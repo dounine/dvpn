@@ -71,3 +71,24 @@ log "端口替换"
 sed -i 's/__port__/$openvpn_port/g' /usr/bin/vpn
 sed -i 's/__port__/$openvpn_port/g' $opdir/createovpn.sh
 sed -i 's/__port__/$openvpn_port/g' $opdir/server.conf
+sed -i 's/3128/$squid_port/g' /etc/squid/squid.conf
+log "linux内核转发打开"
+setenforce 0
+sysctl -p >/dev/null 2>&1
+echo "/usr/sbin/setenforce 0" >> /etc/rc.local
+chmod +x /etc/rc.d/rc.local
+log "iptables设置"
+systemctl stop firewalld.service
+systemctl disable firewalld.service
+systemctl enable iptables.service
+iptables -F
+iptables -A INPUT -p TCP --dport 22 -j ACCEPT
+iptables -t nat -A POSTROUTING -s 10.8.0.0/16 -o eth0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 10.8.0.0/16 -j SNAT --to-source $ip
+iptables -t nat -A POSTROUTING -j MASQUERADE
+iptables -A INPUT -p TCP --dport $openvpn_port -j ACCEPT
+iptables -A INPUT -p TCP --dport $mproxy_port -j ACCEPT
+iptables -A INPUT -p TCP --dport $squid_port -j ACCEPT
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+service iptables save
+systemctl restart iptables
