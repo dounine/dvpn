@@ -14,6 +14,10 @@ squid_port=5552
 #获取dvpn所在工作目录
 workdir=$(cd `dirname $0`;pwd)
 opdir=/etc/openvpn
+log "还原项目"
+cd $workdir
+git checkout *
+git reset 
 log "环境清理中"
 drm $opdir
 drm /usr/bin/vpn
