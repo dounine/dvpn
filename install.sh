@@ -74,7 +74,7 @@ sed -i 's/__port__/$openvpn_port/g' $opdir/createovpn.sh
 sed -i 's/__port__/$openvpn_port/g' $opdir/server.conf
 sed -i 's/3128/$squid_port/g' /etc/squid/squid.conf
 log "iptables设置"
-systemctl stop firewalld.service
+systemctl stop firewalld.service > /dev/null 2>&1
 systemctl disable firewalld.service
 systemctl enable iptables.service
 iptables -F
@@ -89,7 +89,8 @@ iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 service iptables save
 systemctl restart iptables
 log "linux内核转发打开"
-setenforce 0
-sysctl -p >/dev/null 2>&1
+setenforce 0 > /dev/null 2>&1
 echo "/usr/sbin/setenforce 0" >> /etc/rc.local
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+sysctl -p >/dev/null 2>&1
 chmod +x /etc/rc.d/rc.local
