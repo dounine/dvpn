@@ -1,0 +1,8 @@
+#!/bin/bash
+echo -e "安装git工具"
+yum install git -y
+cd ~/
+echo -e "下载项目"
+git clone https://github.com/dounine/dvpn.git
+cd ~/dvpn
+./install
