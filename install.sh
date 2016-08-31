@@ -22,7 +22,7 @@ git clean -df
 log "环境清理中"
 drm $opdir
 drm /usr/bin/vpn
-drm /etc/squid
+yum remove squid -y
 #安装环境所依赖的软件
 log "安装软件所依赖的环境"
 $workdir/shell/readhat/yum-install.sh
@@ -73,11 +73,6 @@ sed -i 's/__port__/$openvpn_port/g' /usr/bin/vpn
 sed -i 's/__port__/$openvpn_port/g' $opdir/createovpn.sh
 sed -i 's/__port__/$openvpn_port/g' $opdir/server.conf
 sed -i 's/3128/$squid_port/g' /etc/squid/squid.conf
-log "linux内核转发打开"
-setenforce 0
-sysctl -p >/dev/null 2>&1
-echo "/usr/sbin/setenforce 0" >> /etc/rc.local
-chmod +x /etc/rc.d/rc.local
 log "iptables设置"
 systemctl stop firewalld.service
 systemctl disable firewalld.service
@@ -93,3 +88,8 @@ iptables -A INPUT -p TCP --dport $squid_port -j ACCEPT
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 service iptables save
 systemctl restart iptables
+log "linux内核转发打开"
+setenforce 0
+sysctl -p >/dev/null 2>&1
+echo "/usr/sbin/setenforce 0" >> /etc/rc.local
+chmod +x /etc/rc.d/rc.local
