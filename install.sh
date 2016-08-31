@@ -29,7 +29,7 @@ log "安装lzo必要组件"
 $workdir/shell/readhat/install-lzo.sh $workdir
 log "mproxy 转接代理下载中..."
 #定义mprox除y下载编译的所在目录
-mpdir=$workdir/.mproxy
+mpdir=.mproxy
 if [ -d $mpdir ];then
 	drm $mpdir
 fi
@@ -39,9 +39,11 @@ mpgithub=https://github.com/dounine/mproxy/raw/master
 wget $mpgithub/mproxy.c 
 wget $mpgithub/Makefile
 log "mproxy c代码编译中..."
-cd $mpdir && make
+cd $workdir/$mpdir && make
 sed -i 's/8080/$mproxy_port/g' $workdir/$mpdir/mproxy.c
 sed -i 's/3330/$openvpn_port/g' $workdir/$mpdir/mproxy.c
+log "mproxy复制"
+cp $workdir/.mproxy/mproxy /usr/bin/
 log "openvpn2.3.12 安装编译"
 cd $workdir/soft && tar -zxf openvpn-2.3.12.tar.gz
 cd $workdir/soft/openvpn-2.3.12 && ./configure --prefix=$opdir && make && make install
@@ -59,8 +61,6 @@ log "生成ca证书"
 cd $opdir/easyrsa3 && ./init.sh $opdir/
 log "生成防攻击ta.key"
 $opdir/sbin/openvpn --genkey --secret $opdir/easyrsa3/pki/ta.key
-log "mproxy复制"
-cp $workdir/.mproxy/mproxy /usr/bin/
 log "复制openvpn所需脚本"
 cp -rf $workdir/conf/openvpn/* $opdir/
 log "vpn启动脚本复制"
