@@ -5,9 +5,9 @@ source shell/funs.sh
 #project version:1.0.0
 #project create time:2016-09-02 13:11:00
 
-
 #获取dvpn所在工作目录
 workdir=$(cd `dirname $0`;pwd)
+opdir=/etc/openvpn
 #安装环境所依赖的软件
 log "安装软件所依赖的环境"
 $workdir/shell/readhat/yum-install.sh
@@ -30,3 +30,16 @@ cd $workdir/soft
 drm easyrsa3
 log "easyrsa3 下载中..."
 svn checkout https://github.com/dounine/easy-rsa/trunk/easyrsa3
+log "easyrsa3 移动==>>"$opdir
+mv -f $workdir/soft/easyrsa3 $opdir
+log "openvpn2.3.12 安装编译"
+cd $workdir/soft && tar -zxf openvpn-2.3.12.tar.gz
+cd $workdir/soft/openvpn-2.3.12 && ./configure --prefix=$opdir && make && make install
+log "编译安装完成"
+log "复制证书生成脚本"
+cp -rf $opdir/conf/scripts/* $opdir/easyrsa3
+log "生成ca证书"
+#cp -rf $workdir/conf $opdir
+log "openvpn 证书相关操作"
+cd $opdir/easyrsa3 && ./init.sh
+

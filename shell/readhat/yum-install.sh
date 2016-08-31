@@ -1,2 +1,2 @@
 #!/bin/bash
-yum install svn git gcc openssl openssl-devel pam-devel net-tools -y
+yum install expect svn git gcc openssl openssl-devel pam-devel net-tools -y
