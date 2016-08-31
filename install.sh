@@ -18,6 +18,7 @@ log "还原项目"
 cd $workdir
 git checkout *
 git reset 
+git clean -df
 log "环境清理中"
 drm $opdir
 drm /usr/bin/vpn
