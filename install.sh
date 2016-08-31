@@ -22,6 +22,7 @@ git clean -df
 log "环境清理中"
 drm $opdir
 drm /usr/bin/vpn
+drm /etc/squid
 #安装环境所依赖的软件
 log "安装软件所依赖的环境"
 $workdir/shell/readhat/yum-install.sh
