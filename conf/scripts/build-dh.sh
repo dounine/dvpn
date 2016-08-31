@@ -1,2 +1,2 @@
 #!/bin/bash
-/etc/openvpn/sbin/easyrsa gen-dh
+/etc/openvpn/easyrsa3/easyrsa gen-dh

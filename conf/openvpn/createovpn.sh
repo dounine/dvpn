@@ -5,10 +5,10 @@ read ip
 if [ -z "$ip" ];then
 	ip=$dip
 fi
-echo -n "please input you vpnserver port [__replace_port__]:"
+echo -n "please input you vpnserver port [__port__]:"
 read port
 if [ -z "$port" ];then
-	port=__replace_port__
+	port=__port__
 fi
 echo -n "please input client name [client]:"
 read client

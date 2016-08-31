@@ -1,0 +1,8 @@
+#!/bin/bash
+pkill squid
+pkill mproxy
+pkill openvpn
+systemctl start squid
+/usr/bin/mproxy -l __port__ -d
+cd /etc/openvpn && ./vpnstart.sh
+exit 0

@@ -7,7 +7,7 @@ function log()
 function drm()
 {
 	filetype="文件"
-	if [ -f $1 ];then
+	if [ -d $1 ];then
 		filetype="文件夹"
 	fi
 	echo -e "\n=========>>>> \033[31m 删除$1:$filetype \033[0m <<<<========\n"
