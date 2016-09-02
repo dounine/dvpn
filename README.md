@@ -12,11 +12,17 @@
 
 ### 一键安装
 
-* 获取 **DVPN** 项目
+* 获取 **dvpn** 项目
     * 先安装用于 `github` 项目的下载工具
     
     ```shell
     > yum install git -y
+    ```
+    
+    * 下载 **dvpn** 项目
+    
+    ```shell
+    > git clone https://github.com/dounine/dvpn.git
     ```
     
     * 切换至 `dvpn` 项目
