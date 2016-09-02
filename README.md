@@ -10,30 +10,38 @@
 
 ## 使用指南(仅限linux系统)
 
-### 一键安装
+### 安装方式
 
-* 获取 **dvpn** 项目
-    * 先安装用于 `github` 项目的下载工具
-    
-    ```shell
-    > yum install git -y
-    ```
-    
-    * 下载 **dvpn** 项目
-    
-    ```shell
-    > git clone https://github.com/dounine/dvpn.git
-    ```
-    
-    * 切换至 `dvpn` 项目
-        
-    ```shell
-    > cd dvpn
-    ```
-    
-* 执行一键安装脚本
+#### 傻瓜安装
+
+
+
+#### 一键安装
+
+1. 复制命令到控制台运行即可
 
 ```shell
-> ./install.sh
+curl -fsSL https://github.com/dounine/dvpn/raw/master/shell/foll | sh
+```
+
+#### 一键安装
+
+
+1. 先安装用于 `github` 项目的下载工具
+    
+```shell
+yum install git -y
+```
+    
+2. 下载 **dvpn** 项目
+    
+```shell
+git clone https://github.com/dounine/dvpn.git
+```
+    
+3. 切换至 `dvpn` 项目并执行一键安装脚本
+   
+```shell
+cd dvpn && ./install.sh
 ```
 
