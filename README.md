@@ -10,13 +10,14 @@
 
 ## 使用指南(仅限linux系统)
 
-### 安装方式
+### 傻瓜式一键安装
 
-#### 傻瓜一键安装
 
-复制命令到控制台运行即可
 
 ```shell
-    curl -fsSL https://github.com/dounine/dvpn/raw/master/shell/foll | sh
+复制命令到控制台运行即可
+
+> curl -fsSL https://github.com/dounine/dvpn/raw/master/shell/foll | sh
+
 ```
 
