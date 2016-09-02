@@ -1,10 +1,50 @@
 #!/bin/bash
-echo "download mproxy..."
-mproxy=tmp_mproxy
-mkdir $mproxy && cd $mproxy
-wget https://github.com/dounine/mproxy/raw/master/mproxy.c > /dev/null 
-wget https://github.com/dounine/mproxy/raw/master/Makefile > /dev/null
-echo "download mproxy finish"
-echo "compile mproxy finish"
+#project download address：https://github.com/dounine/dvpn
+#project author:huanghuanlai
+#project version:1.0.0
+#project create time:2016-09-02 13:11:00
+
+
+#获取dvpn所在工作目录
+workdir=$(cd `dirname $0`;pwd)
+#此函数用于显示所有shell红色字体
+function log()
+{
+	echo -e "=========>>>> \033[31m $1 \033[0m"
+}
+function drm()
+{
+	filetype="文件"
+	if [ -f $1 ];then
+		filetype="文件夹"
+	fi
+	echo -e "=========>>>> \033[31m 删除$1:$filetype \033[0m"
+	rm -rf $1
+}
+function dmkdir()
+{
+	echo -e "=========>>>> \033[31m 创建文件夹$1 \033[0m"
+	mkdir -p $1
+}
+#安装环境所依赖的软件
+log "安装软件所依赖的环境"
+$workdir/shell/readhat/yum-install.sh
+log "安装lzo必要组件"
+$workdir/shell/readhat/install-lzo.sh $workdir
+log "mproxy 转接代理下载中..."
+#定义mprox除y下载编译的所在目录
+mpdir=.mproxy
+if [ -d $mpdir ];then
+	drm $mpdir
+fi
+dmkdir $mpdir && cd $mpdir
+#下载github中的单个文件
+mpgithub=https://github.com/dounine/mproxy/raw/master
+wget $mpgithub/mproxy.c 
+wget $mpgithub/Makefile
+log "mproxy c代码编译中..."
 make
-echo "compile mproxy finish"
+cd $workdir/soft
+drm easyrsa3
+log "easyrsa3 下载中..."
+svn checkout https://github.com/dounine/easy-rsa/trunk/easyrsa3
