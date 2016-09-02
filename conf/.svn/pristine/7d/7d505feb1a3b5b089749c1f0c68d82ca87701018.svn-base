@@ -1,0 +1,29 @@
+script-security 3
+port replace_port 
+proto tcp 
+dev tun
+ca easyrsa/pki/ca.crt
+cert easyrsa/pki/issued/server.crt
+key easyrsa/pki/private/server.key
+dh easyrsa/pki/dh.pem
+auth-user-pass-verify /etc/ovpn/checkpsw.sh via-env
+username-as-common-name
+client-cert-not-required
+push "redirect-gateway def1 bypass-dhcp"
+push "dhcp-option DNS 8.8.8.8"
+push "dhcp-option DNS 8.8.4.4"
+push "route 10.0.0.0 255.255.255.0"
+server 10.8.0.0 255.255.255.0
+tls-auth easyrsa/pki/ta.key
+ifconfig-pool-persist ipp.txt
+duplicate-cn
+max-clients 100
+keepalive 10 120
+user nobody
+group nobody
+comp-lzo
+persist-key
+persist-tun
+log ovpn.log
+status ovpn-status.log
+verb 3
