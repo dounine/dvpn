@@ -1,4 +1,5 @@
 #!/bin/bash
+source shell/funs.sh
 #project download address：https://github.com/dounine/dvpn
 #project author:huanghuanlai
 #project version:1.0.0
@@ -7,25 +8,6 @@
 
 #获取dvpn所在工作目录
 workdir=$(cd `dirname $0`;pwd)
-#此函数用于显示所有shell红色字体
-function log()
-{
-	echo -e "=========>>>> \033[31m $1 \033[0m"
-}
-function drm()
-{
-	filetype="文件"
-	if [ -f $1 ];then
-		filetype="文件夹"
-	fi
-	echo -e "=========>>>> \033[31m 删除$1:$filetype \033[0m"
-	rm -rf $1
-}
-function dmkdir()
-{
-	echo -e "=========>>>> \033[31m 创建文件夹$1 \033[0m"
-	mkdir -p $1
-}
 #安装环境所依赖的软件
 log "安装软件所依赖的环境"
 $workdir/shell/readhat/yum-install.sh
